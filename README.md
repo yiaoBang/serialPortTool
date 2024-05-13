@@ -21,7 +21,7 @@
 	<dependency>
 	    <groupId>com.github.yiaoBang</groupId>
 	    <artifactId>serialPortTool</artifactId>
-	    <version>2.11.0-alpha</version>
+	    <version>2.11.0-alpha2</version>
 	</dependency>
 ```
 
