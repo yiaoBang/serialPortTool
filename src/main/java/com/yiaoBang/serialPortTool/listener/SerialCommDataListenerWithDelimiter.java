@@ -12,6 +12,7 @@ public class SerialCommDataListenerWithDelimiter implements SerialPortMessageLis
         this.delimiter = delimiter;
         this.handler = handler;
     }
+
     @Override
     public void catchException(Exception e) {
         throw new RuntimeException(e);
@@ -20,6 +21,7 @@ public class SerialCommDataListenerWithDelimiter implements SerialPortMessageLis
     /**
      * 获取消息分隔符
      * 如果返回的是空数组将视作不启用
+     *
      * @return {@code byte[] }
      */
     @Override
@@ -35,11 +37,15 @@ public class SerialCommDataListenerWithDelimiter implements SerialPortMessageLis
 
     @Override
     public int getListeningEvents() {
-        return SerialPort.LISTENING_EVENT_DATA_RECEIVED;
+        return SerialPort.LISTENING_EVENT_DATA_RECEIVED | SerialPort.LISTENING_EVENT_PORT_DISCONNECTED;
     }
 
     @Override
     public void serialEvent(SerialPortEvent event) {
-        this.handler.dataReceive(event.getReceivedData());
+        if (event.getEventType() == SerialPort.LISTENING_EVENT_DATA_RECEIVED) {
+            this.handler.dataReceive(event.getReceivedData());
+        } else {
+            this.handler.serialPortDisconnected();
+        }
     }
 }

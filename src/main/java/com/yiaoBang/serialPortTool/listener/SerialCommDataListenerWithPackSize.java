@@ -20,11 +20,15 @@ public class SerialCommDataListenerWithPackSize implements SerialPortPacketListe
 
     @Override
     public int getListeningEvents() {
-        return SerialPort.LISTENING_EVENT_DATA_RECEIVED;
+        return SerialPort.LISTENING_EVENT_DATA_RECEIVED | SerialPort.LISTENING_EVENT_PORT_DISCONNECTED;
     }
 
     @Override
     public void serialEvent(SerialPortEvent event) {
-        this.handler.dataReceive(event.getReceivedData());
+        if (event.getEventType() == SerialPort.LISTENING_EVENT_DATA_RECEIVED) {
+            this.handler.dataReceive(event.getReceivedData());
+        } else {
+            this.handler.serialPortDisconnected();
+        }
     }
 }

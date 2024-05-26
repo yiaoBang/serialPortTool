@@ -5,7 +5,6 @@ import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.yiaoBang.serialPortTool.listener.SerialCommDataListenerWithDelimiter;
 import com.yiaoBang.serialPortTool.listener.SerialCommDataListenerWithPackSize;
 import com.yiaoBang.serialPortTool.listener.SerialCommDataReceiveHandler;
-
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -316,6 +315,11 @@ public class SerialComm implements SerialCommDataReceiveHandler, AutoCloseable {
             byte[] bytes = mergeArrays(receivedSerialPortData, data);
             receivedSerialPortData = bytes;
         }
+    }
+
+    @Override
+    public void serialPortDisconnected() {
+
     }
 
     /**
